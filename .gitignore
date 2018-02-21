@@ -6,6 +6,8 @@
 build/
 DerivedData/
 
+SwiftNes.xcodeproj/
+
 ## Various settings
 *.pbxuser
 !default.pbxuser
