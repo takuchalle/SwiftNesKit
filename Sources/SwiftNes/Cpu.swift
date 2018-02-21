@@ -1,9 +1,9 @@
 // 
-// SwiftNes.swift
+// CPU.swift
 //
 // Copyright © 2018 Takuya OHASHI. All rights reserved.
 //
 
-struct SwiftNes {
-    private let cpu: CPU
+struct CPU {
+    var text = "CPU"
 }
