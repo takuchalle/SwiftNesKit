@@ -2,5 +2,5 @@ import XCTest
 @testable import SwiftNesTests
 
 XCTMain([
-    testCase(SwiftNesTests.allTests),
+    testCase(NesFileTests.allTests),
 ])
