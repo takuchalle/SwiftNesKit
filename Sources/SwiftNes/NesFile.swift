@@ -5,6 +5,14 @@
 //
 import Foundation
 
+fileprivate let headerSize = 4
+fileprivate func checkHeader(_ header: Data) -> Bool {
+	return (header[0] == 0x4E &&
+		header[1] == 0x45 &&
+		header[2] == 0x53 &&
+		header[3] == 0x1A)
+}
+
 struct NesFile {
 	let Program: Data
 	let Character: Data
@@ -12,15 +20,8 @@ struct NesFile {
 	let programSizeUnit = 16 * 1024
 	let characterSizeUnit = 8 * 1024
 
-	static let headerSize = 4
-	static func checkHeader(_ header: Data) -> Bool {
-		return (header[0] == 0x4E &&
-			header[1] == 0x45 &&
-			header[2] == 0x53 &&
-			header[3] == 0x1A)
-	}
 	init?(_ data: Data) {
-		guard NesFile.checkHeader(data.subdata(in: 0..<NesFile.headerSize)) else {
+		guard checkHeader(data.subdata(in: 0..<headerSize)) else {
 			return nil
 		}
 		let programSize = Int(data[4]) * programSizeUnit
