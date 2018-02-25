@@ -20,8 +20,8 @@ struct NesFile {
 	let Program: Data
 	let Character: Data
 
-    let programSizeUnit = 16 * 1024
-    let characterSizeUnit = 8 * 1024
+	private let programSizeUnit = 16 * 1024
+	private let characterSizeUnit = 8 * 1024
 
 	init?(_ data: Data) {
 		guard checkMagic(data.subdata(in: 0..<magicSize)) else {
