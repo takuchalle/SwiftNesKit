@@ -2,12 +2,18 @@ import XCTest
 @testable import SwiftNes
 
 class NesFileTests: XCTestCase {
-    func testNesFileInitializeNil() {
-	let data = Data(bytes: [0, 1, 2, 4, 5])
+    func testNesFileInitializeWithWrongHeader() {
+        let fileName = "WrongHeader.nes"
+
+	guard let data = openFile(with: fileName) else {
+            XCTFail("Failed To Open Test File")
+            return
+        }
+        
         XCTAssertNil(NesFile(data))
     }
 
     static var allTests = [
-        ("testNesFileInitializeNil", testNesFileInitializeNil),
+        ("testNesFileInitializeWithWrongHeader", testNesFileInitializeWithWrongHeader),
     ]
 }
