@@ -5,5 +5,5 @@
 //
 
 struct CPU {
-    var text = "CPU"
+    private let memory: Memory
 }
