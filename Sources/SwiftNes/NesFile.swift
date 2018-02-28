@@ -19,6 +19,8 @@ fileprivate func checkMagic(_ magic: Data) -> Bool {
 struct NesFile {
 	let Program: Data
 	let Character: Data
+    let programSize: Int
+    let characterSize: Int
 
 	private let programSizeUnit = 16 * 1024
 	private let characterSizeUnit = 8 * 1024
@@ -27,8 +29,8 @@ struct NesFile {
 		guard checkMagic(data.subdata(in: 0..<magicSize)) else {
 			return nil
 		}
-		let programSize = Int(data[4]) * programSizeUnit
-		let characterSize = Int(data[5]) * characterSizeUnit
+		self.programSize = Int(data[4]) * programSizeUnit
+		self.characterSize = Int(data[5]) * characterSizeUnit
 
         let programBottom = headerSize + programSize
 		Program = data.subdata(in: headerSize..<programBottom)
