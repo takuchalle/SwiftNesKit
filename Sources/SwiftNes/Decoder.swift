@@ -6,6 +6,9 @@
 
 import Foundation
 
+struct Instruction {
+}
+
 struct Decoder {
     static func decode() {
         
