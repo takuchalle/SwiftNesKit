@@ -6,4 +6,9 @@
 
 struct SwiftNes {
     private let cpu: CPU
+
+    init() {
+        let memory = Memory()
+        cpu = CPU(with: memory)
+    }
 }

@@ -14,7 +14,8 @@ struct Memory {
         ram = [UInt8](repeating: 0, count: 0x1000)
     }
     
-    func load(at offset: UInt16, data: Data) {
-
+    mutating func load(at offset: Int, data: [UInt8]) {
+        let last = 0x1000 - offset + data.count
+        ram.replaceSubrange(offset...last, with: data)
     }
 }
