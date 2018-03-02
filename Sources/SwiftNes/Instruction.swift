@@ -65,7 +65,7 @@ struct Instruction {
     }
     
     enum Addressing {
-        case ZeroPag
+        case ZeroPage
         case Relative
         case Implied
         case Absolute
@@ -75,9 +75,9 @@ struct Instruction {
         case ZeroPageY
         case AbsoluteX
         case AbsoluteY
-        case PreIndexedIndirect
-        case PostIndexedIndirect
-        case IndirectAbsolute
+        case IndirectX
+        case IndirectY
+        case None
     }
 
     let opcode: Opcode 
