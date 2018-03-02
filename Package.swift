@@ -10,6 +10,7 @@ let package = Package(
         .library(
             name: "SwiftNes",
             targets: ["SwiftNes"]),
+        .executable(name: "SwiftNesDisassemble", targets: ["SwiftNesDisassemble"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -21,6 +22,9 @@ let package = Package(
         .target(
             name: "SwiftNes",
             dependencies: []),
+        .target(
+            name: "SwiftNesDisassemble",
+            dependencies: ["SwiftNes"]),
         .testTarget(
             name: "SwiftNesTests",
             dependencies: ["SwiftNes"]),
