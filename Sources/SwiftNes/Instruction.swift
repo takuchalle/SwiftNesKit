@@ -77,6 +77,7 @@ struct Instruction {
         case AbsoluteY
         case IndirectX
         case IndirectY
+        case Indirect
         case None
     }
 
