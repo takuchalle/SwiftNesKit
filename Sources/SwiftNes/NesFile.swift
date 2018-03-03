@@ -36,4 +36,7 @@ struct NesFile {
 		Program = [UInt8](data.subdata(in: headerSize..<programBottom))
 		Character = [UInt8](data.subdata(in: programBottom..<(programBottom + characterSize)))
 	}
+
+    func dump() {
+    }
 }
