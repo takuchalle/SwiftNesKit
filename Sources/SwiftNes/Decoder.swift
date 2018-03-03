@@ -7,7 +7,7 @@
 import Foundation
 
 struct Decoder {
-    let InstructionTable: [Int:Instruction] = [
+    let InstructionTable: [UInt8:Instruction] = [
         // LDA: LoaD to A register
         0xA9: Instruction(opcode: .LDA, addressing: .Immediate, bytes: 2, cycle: 2),
         0xA5: Instruction(opcode: .LDA, addressing: .ZeroPage,  bytes: 2, cycle: 3),
@@ -262,10 +262,13 @@ struct Decoder {
         0xEA: Instruction(opcode: .NOP, addressing: .Implied, bytes: 1, cycle: 2),
         ]
 
-    static func decode() {
-        
+    func decode(opcode op: UInt8) -> Instruction {
+        guard let _op = InstructionTable[op] else {
+            fatalError()
+        }
+        return _op;
     }
 
-    static func decodeAll() {
+    func decodeAll() {
     }
 }
