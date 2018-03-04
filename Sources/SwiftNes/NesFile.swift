@@ -16,7 +16,7 @@ fileprivate func checkMagic(_ magic: Data) -> Bool {
             magic[3] == 0x1A)
 }
 
-struct NesFile {
+public struct NesFile {
 	let Program: [UInt8]
 	let Character: [UInt8]
     let programSize: Int
@@ -25,7 +25,7 @@ struct NesFile {
 	private let programSizeUnit = 16 * 1024
 	private let characterSizeUnit = 8 * 1024
 
-	init?(_ data: Data) {
+	public init?(_ data: Data) {
 		guard checkMagic(data.subdata(in: 0..<magicSize)) else {
 			return nil
 		}
@@ -37,6 +37,18 @@ struct NesFile {
 		Character = [UInt8](data.subdata(in: programBottom..<(programBottom + characterSize)))
 	}
 
-    func dump() {
+    public func dumpAll() {
+        dumpHeader()
+        dumpInstruction()
+    }
+
+    public func dumpInstruction() {
+    }
+
+    public func dumpHeader() {
+        print("## NES File Header Info ##")
+
+        print("Program Size: \(programSize) bytes")
+        print("Character Size: \(characterSize) bytes")
     }
 }
