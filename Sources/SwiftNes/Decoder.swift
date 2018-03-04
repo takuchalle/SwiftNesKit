@@ -44,12 +44,12 @@ struct Decoder {
         // STX: STore from X register
         0x86: Instruction(opcode: .STX, addressing: .ZeroPage,  bytes: 2, cycle: 3),
         0x96: Instruction(opcode: .STX, addressing: .ZeroPageY, bytes: 2, cycle: 4),
-        0xBE: Instruction(opcode: .STX, addressing: .Absolute,  bytes: 3, cycle: 4),
+        0x8E: Instruction(opcode: .STX, addressing: .Absolute,  bytes: 3, cycle: 4),
 
         // STY: STore from Y register
-        0x84: Instruction(opcode: .STX, addressing: .ZeroPage,  bytes: 2, cycle: 3),
-        0x94: Instruction(opcode: .STX, addressing: .ZeroPageX, bytes: 2, cycle: 4),
-        0xBC: Instruction(opcode: .STX, addressing: .Absolute,  bytes: 3, cycle: 4),
+        0x84: Instruction(opcode: .STY, addressing: .ZeroPage,  bytes: 2, cycle: 3),
+        0x94: Instruction(opcode: .STY, addressing: .ZeroPageX, bytes: 2, cycle: 4),
+        0x8C: Instruction(opcode: .STY, addressing: .Absolute,  bytes: 3, cycle: 4),
 
         // TAX: Transfer from A to X
         0xAA: Instruction(opcode: .TAX, addressing: .Implied,  bytes: 1, cycle: 2),
@@ -131,6 +131,16 @@ struct Decoder {
 
         // DEY: DEcrement Y register
         0x88: Instruction(opcode: .DEY, addressing: .Implied, bytes: 1, cycle: 2),
+
+        // EOR: Exclusive OR
+        0x49: Instruction(opcode: .EOR, addressing: .Immediate, bytes: 2, cycle: 2),
+        0x45: Instruction(opcode: .EOR, addressing: .ZeroPage,  bytes: 2, cycle: 3),
+        0x55: Instruction(opcode: .EOR, addressing: .ZeroPageX, bytes: 2, cycle: 4),
+        0x4D: Instruction(opcode: .EOR, addressing: .Absolute,  bytes: 3, cycle: 4),
+        0x5D: Instruction(opcode: .EOR, addressing: .AbsoluteX, bytes: 3, cycle: 4),
+        0x59: Instruction(opcode: .EOR, addressing: .AbsoluteY, bytes: 3, cycle: 4),
+        0x41: Instruction(opcode: .EOR, addressing: .IndirectX, bytes: 2, cycle: 6),
+        0x51: Instruction(opcode: .EOR, addressing: .IndirectY, bytes: 2, cycle: 5),
 
         // INC: INCrement
         0xE6: Instruction(opcode: .INC, addressing: .ZeroPage,  bytes: 2, cycle: 5),
