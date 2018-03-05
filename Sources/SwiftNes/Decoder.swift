@@ -291,7 +291,7 @@ struct Decoder {
             let inst: Instruction = decode(opcode: ops[pc])
             insts.append(inst)
             pc += (Int)(inst.bytes)
-        } while(pc <= ops.count)
+        } while(pc < ops.count)
 
         return insts
     }
