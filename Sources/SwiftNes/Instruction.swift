@@ -4,7 +4,7 @@
 // Copyright © 2018 Takuya OHASHI. All rights reserved.
 //
 
-struct Instruction {
+struct Instruction: CustomStringConvertible {
     enum Opcode: String {
         case LDA = "LDA"
         case LDX = "LDX"
@@ -86,4 +86,8 @@ struct Instruction {
     let addressing: Addressing
     let bytes: UInt8
     let cycle: UInt8
+
+    var description: String {
+        return self.opcode.rawValue
+    }
 }
