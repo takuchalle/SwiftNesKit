@@ -29,7 +29,33 @@ struct CPU {
      */
     private let memory: Memory
 
+    private let decoder: Decoder
+
+    /* Accumulator */
+    private var a: UInt8
+
+    /* Index register */
+    private var x: UInt8
+    private var y: UInt8
+
+    /* Stack Pointer */
+    private var s: UInt8
+
+    /* Status Register */
+    private var p: UInt8
+
+    /* Program Counter */
+    private var pc: UInt16
+
     init(with memory: Memory) {
         self.memory = memory
+        self.decoder = Decoder()
+
+        self.a = 0
+        self.x = 0
+        self.y = 0
+        self.s = 0
+        self.p = 0
+        self.pc = 0
     }
 }
