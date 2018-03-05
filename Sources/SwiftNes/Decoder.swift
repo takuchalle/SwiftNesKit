@@ -266,11 +266,15 @@ struct Decoder {
         0x78: Instruction(opcode: .SEI, addressing: .Implied, bytes: 1, cycle: 2),
 
         // BRK: Break
-        0x00: Instruction(opcode: .SEI, addressing: .Implied, bytes: 1, cycle: 7),
+        0x00: Instruction(opcode: .BRK, addressing: .Implied, bytes: 1, cycle: 7),
 
         // NOP: No Operation
         0xEA: Instruction(opcode: .NOP, addressing: .Implied, bytes: 1, cycle: 2),
-        ]
+        0x52: Instruction(opcode: .NOP, addressing: .Implied, bytes: 1, cycle: 2),
+        0x80: Instruction(opcode: .NOP, addressing: .Implied, bytes: 1, cycle: 2),
+
+        0x0F: Instruction(opcode: .SLO, addressing: .Absolute, bytes: 3, cycle: 2),
+    ]
 
     func decode(opcode op: UInt8) -> Instruction {
         guard let _op = InstructionTable[op] else {

@@ -62,6 +62,7 @@ struct Instruction {
         case SEI = "SEI"
         case BRK = "BRK"
         case NOP = "NOP"
+        case SLO = "SLO"
     }
     
     enum Addressing {
