@@ -10,12 +10,22 @@ struct Memory {
 
     var ram: [UInt8]
 
+    private let maxMemSize = 0x10000
+
     init() {
-        ram = [UInt8](repeating: 0, count: 0x1000)
+        ram = [UInt8](repeating: 0, count: maxMemSize)
     }
     
     mutating func load(at offset: Int, data: [UInt8]) {
-        let last = 0x1000 - offset + data.count
+        let last = maxMemSize - offset + data.count
         ram.replaceSubrange(offset...last, with: data)
+    }
+
+    func read1byte(at offset: Int) -> UInt8 {
+        return ram[offset]
+    }
+
+    func read2byte(at offset: Int) -> UInt16 {
+        return (UInt16)(ram[offset + 1]) | (UInt16)(ram[offset + 2]) << 8
     }
 }
