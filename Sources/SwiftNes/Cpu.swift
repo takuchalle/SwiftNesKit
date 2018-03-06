@@ -62,7 +62,7 @@ struct CPU {
         self.y = 0
         self.s = 0xFF
         self.p = StatusRegister()
-        self.pc = 0
+        self.pc = 0x8000
     }
 
     /* Interrupt Handler */
