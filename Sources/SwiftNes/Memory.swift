@@ -28,4 +28,8 @@ struct Memory {
     func read2byte(at offset: Int) -> UInt16 {
         return (UInt16)(ram[offset + 1]) | (UInt16)(ram[offset + 2]) << 8
     }
+
+    mutating func write(at offset: Int, value: UInt8) {
+        ram[offset] = value
+    }
 }
