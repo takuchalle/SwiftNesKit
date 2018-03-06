@@ -295,14 +295,14 @@ struct Decoder {
         return (_inst, value);
     }
 
-    func decodeAll(_ ops :[UInt8]) -> [Instruction] {
-        var insts: [Instruction] = []
+    func decodeAll(_ ops :[UInt8]) -> [(inst: Instruction, value: UInt16?)] {
+        var insts: [(inst: Instruction, value: UInt16?)] = []
         var pc = 0
 
         repeat {
-            let (inst, _) = decode(ops, pc: pc)
+            let (inst, value) = decode(ops, pc: pc)
 
-            insts.append(inst)
+            insts.append((inst, value))
             pc += (Int)(inst.bytes)
         } while(pc < ops.count)
 
