@@ -27,7 +27,7 @@ struct CPU {
      * RAM
      * -- $0000 --
      */
-    private let memory: Memory
+    private var memory: Memory
 
     private let decoder: Decoder
 
@@ -39,7 +39,13 @@ struct CPU {
     private var y: UInt8
 
     /* Stack Pointer */
-    private var s: UInt8
+    private var s: UInt8 {
+        willSet {
+            if(newValue == (UInt8)(0x0)) {
+                fatalError("Stack OverFlow")
+            }
+        }
+    }
 
     /* Status Register */
     private var p: StatusRegister
@@ -54,7 +60,7 @@ struct CPU {
         self.a = 0
         self.x = 0
         self.y = 0
-        self.s = 0
+        self.s = 0xFF
         self.p = StatusRegister()
         self.pc = 0
     }
@@ -74,5 +80,16 @@ struct CPU {
     mutating func irqHandler() {
         self.pc = memory.read2byte(at: 0xFFFE)
         self.p.i = true
+    }
+
+    /* Stack Operation */
+    mutating func push(_ value: UInt8) {
+        memory.write(at: 0x100 + (Int)(self.s), value: value)
+        self.s = self.s - 1
+    }
+
+    mutating func pop() -> UInt8 {
+        self.s = self.s + 1
+        return memory.read1byte(at: 0x100 + (Int)(self.s))
     }
 }
