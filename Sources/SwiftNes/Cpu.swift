@@ -42,7 +42,7 @@ struct CPU {
     private var s: UInt8
 
     /* Status Register */
-    private var p: UInt8
+    private var p: StatusRegister
 
     /* Program Counter */
     private var pc: UInt16
@@ -55,7 +55,24 @@ struct CPU {
         self.x = 0
         self.y = 0
         self.s = 0
-        self.p = 0
+        self.p = StatusRegister()
         self.pc = 0
+    }
+
+    /* Interrupt Handler */
+    mutating func nmiHandler() {
+        self.pc = memory.read2byte(at: 0xFFFA)
+        self.p.i = true
+        self.p.b = false
+    }
+
+    mutating func resetHandler() {
+        self.pc = memory.read2byte(at: 0xFFFC)
+        self.p.i = true
+    }
+
+    mutating func irqHandler() {
+        self.pc = memory.read2byte(at: 0xFFFE)
+        self.p.i = true
     }
 }
