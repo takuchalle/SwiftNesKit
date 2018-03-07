@@ -7,7 +7,8 @@ import Foundation
 import SwiftNes
 
 func usage() {
-    print("Usage: SwiftNesDisassemble [input nes file]")
+    let path = URL(fileURLWithPath: CommandLine.arguments.first!)
+    print("Usage: \(path.lastPathComponent) [input nes file]")
 }
 
 let arguments = CommandLine.arguments

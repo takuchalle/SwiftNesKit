@@ -10,7 +10,7 @@ let package = Package(
         .library(
             name: "SwiftNes",
             targets: ["SwiftNes"]),
-        .executable(name: "SwiftNesDisassemble", targets: ["SwiftNesDisassemble"]),
+        .executable(name: "nes-disasm", targets: ["SwiftNesDisassemble"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
