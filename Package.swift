@@ -13,8 +13,7 @@ let package = Package(
         .executable(name: "nes-disasm", targets: ["SwiftNesDisassemble"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+      .package(url: "https://github.com/kylef/Commander.git", from: "0.8.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -24,7 +23,7 @@ let package = Package(
             dependencies: []),
         .target(
             name: "SwiftNesDisassemble",
-            dependencies: ["SwiftNes"]),
+            dependencies: ["SwiftNes", "Commander"]),
         .testTarget(
             name: "SwiftNesTests",
             dependencies: ["SwiftNes"]),
