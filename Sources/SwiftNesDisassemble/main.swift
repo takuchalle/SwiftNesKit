@@ -4,29 +4,35 @@
 // Copyright © 2018 Takuya OHASHI. All rights reserved.
 //
 import Foundation
+import Commander
 import SwiftNes
 
-func usage() {
-    let path = URL(fileURLWithPath: CommandLine.arguments.first!)
-    print("Usage: \(path.lastPathComponent) [input nes file]")
+let main = command(
+  Argument<String>("path"),
+  Flag("header", description: "Searches on cocoapods.org"),
+  Flag("program", description: "Searches on cocoapods.org")
+) { path, header, program in
+    guard let data = FileManager.default.contents(atPath: path) else {
+        print("Failed to Open \(path)")
+        exit(EXIT_FAILURE)
+    }
+
+    guard let nesfile = NesFile(data) else {
+        print("Failed to Initialize nesfile")
+        exit(EXIT_FAILURE)
+    }
+
+    if header && program {
+        nesfile.dumpAll()
+    } else if header {
+        nesfile.dumpHeader()
+    } else if header {
+        nesfile.dumpInstruction()
+    } else {
+        nesfile.dumpAll()
+    }
 }
 
-let arguments = CommandLine.arguments
-let arg1 = arguments.dropFirst().first
+main.run()
 
-guard let path = arg1 else {
-    usage()
-    exit(EXIT_FAILURE)
-}
 
-guard let data = FileManager.default.contents(atPath: path) else {
-    print("Failed to Open \(path)")
-    exit(EXIT_FAILURE)
-}
-
-guard let nesfile = NesFile(data) else {
-    print("Failed to Initialize nesfile")
-    exit(EXIT_FAILURE)
-}
-
-nesfile.dumpAll()
