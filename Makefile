@@ -1,4 +1,4 @@
-TOOL_NAME = SwiftNesDisassemble 
+TOOL_NAME = nes-disasm
 VERSION = 0.0.2
 
 PREFIX?=/usr/local
