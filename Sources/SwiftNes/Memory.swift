@@ -21,15 +21,18 @@ struct Memory {
         ram.replaceSubrange(offset...last, with: data)
     }
 
-    func read1byte(at offset: Int) -> UInt8 {
-        return ram[offset]
+    func read1byte(at offset: UInt16) -> UInt8 {
+        let _offset = Int(offset)
+        return ram[_offset]
     }
 
-    func read2byte(at offset: Int) -> UInt16 {
-        return (UInt16)(ram[offset + 1]) | (UInt16)(ram[offset + 2]) << 8
+    func read2byte(at offset: UInt16) -> UInt16 {
+        let _offset = Int(offset)
+        return (UInt16)(ram[_offset]) | (UInt16)(ram[_offset + 1]) << 8
     }
 
-    mutating func write(at offset: Int, value: UInt8) {
-        ram[offset] = value
+    mutating func write(at offset: UInt16, value: UInt8) {
+        let _offset = Int(offset)
+        ram[_offset] = value
     }
 }

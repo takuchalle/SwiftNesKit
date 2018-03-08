@@ -65,6 +65,47 @@ struct CPU {
         self.pc = 0x8000
     }
 
+    public mutating func step() {
+        let inst = fetch()
+        pc = pc + UInt16(inst.bytes)
+        exec(inst)
+    }
+
+    func fetch() -> Instruction {
+        return decoder.decode(memory.ram, pc: self.pc)
+    }
+
+    mutating func exec(_ inst: Instruction) {
+        switch inst.opcode {
+        case .LDA:
+            lda(inst)
+        case .LDX:
+            ldx(inst)
+        case .LDY:
+            ldy(inst)
+        case .STA:
+            sta(inst)
+        case .STX:
+            stx(inst)
+        case .STY:
+            sty(inst)
+        case .TAX:
+            tax()
+        case .TAY:
+            tay()
+        case .TSX:
+            tsx()
+        case .TXA:
+            txa()
+        case .TXS:
+            txs()
+        case .TYA:
+            tya()
+        default:
+            print("Unknown opcode")
+        }
+    }
+
     /* Interrupt Handler */
     mutating func nmiHandler() {
         self.pc = memory.read2byte(at: 0xFFFA)
@@ -84,12 +125,99 @@ struct CPU {
 
     /* Stack Operation */
     mutating func push(_ value: UInt8) {
-        memory.write(at: 0x100 + (Int)(self.s), value: value)
+        memory.write(at: UInt16(0x100) + UInt16(self.s), value: value)
         self.s = self.s - 1
     }
 
     mutating func pop() -> UInt8 {
         self.s = self.s + 1
-        return memory.read1byte(at: 0x100 + (Int)(self.s))
+        return memory.read1byte(at: UInt16(0x100) + UInt16(self.s))
+    }
+
+    func read(_ inst: Instruction) -> UInt8 {
+        guard let value = inst.value else {
+            return UInt8(0)
+        }
+
+        switch inst.addressing {
+        case .ZeroPage, .Absolute:
+            return memory.read1byte(at: value)
+        case .ZeroPageX, .AbsoluteX:
+            return memory.read1byte(at: value + UInt16(self.x))
+        case .ZeroPageY, .AbsoluteY:
+            return memory.read1byte(at: value + UInt16(self.y))
+        case .Immediate:
+            return UInt8(value)
+        case .IndirectX:
+            let addr = memory.read2byte(at: value + UInt16(self.x))
+            return memory.read1byte(at: addr)
+        case .IndirectY:
+            let addr = memory.read2byte(at: value)
+            return memory.read1byte(at: addr + UInt16(self.x))
+        default:
+            return UInt8(0)
+        }
+    }
+
+    mutating func setNZ(_ value: UInt8) {
+        self.p.z = (value == UInt8(0))
+        self.p.n = (value & (1 << 7) != 0)
+    }
+
+    mutating func lda(_ inst: Instruction) {
+        self.a = read(inst)
+        setNZ(self.a)
+    }
+
+    mutating func ldx(_ inst: Instruction) {
+        self.x = read(inst)
+        setNZ(self.x)
+    }
+
+    mutating func ldy(_ inst: Instruction) {
+        self.y = read(inst)
+        setNZ(self.y)
+    }
+
+    mutating func sta(_ inst: Instruction) {
+        memory.write(at: inst.value!, value: self.a)
+    }
+
+    mutating func stx(_ inst: Instruction) {
+        memory.write(at: inst.value!, value: self.x)
+    }
+
+    mutating func sty(_ inst: Instruction) {
+        memory.write(at: inst.value!, value: self.y)
+    }
+
+    mutating func tax() {
+        self.x = self.a
+        setNZ(self.x)
+    }
+
+    mutating func tay() {
+        self.y = self.a
+        setNZ(self.y)
+    }
+
+    mutating func tsx() {
+        self.x = self.s
+        setNZ(self.x)
+    }
+
+    mutating func txa() {
+        self.a = self.x
+        setNZ(self.a)
+    }
+
+    mutating func txs() {
+        self.s = self.x
+        setNZ(self.s)
+    }
+
+    mutating func tya() {
+        self.a = self.y
+        setNZ(self.a)
     }
 }
