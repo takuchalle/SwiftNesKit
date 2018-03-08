@@ -12,7 +12,7 @@ You can install these commands via Homebrew.
 
 ```
 $ brew tap takuyaohashi/SwiftNes https://github.com/takuyaohashi/SwiftNes
-$ brew install takuyaohashi/SwiftNes
+$ brew install SwiftNes
 ```
 
 ## Disassemble
