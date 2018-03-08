@@ -47,12 +47,11 @@ public struct NesFile {
         print("## NES Program Section ##")
 
         let decoder = Decoder()
-        let data = decoder.decodeAll(Program)
+        let insts = decoder.decodeAll(Program)
         var pc: UInt16 = 0x0
 
-        for d in data {
-            let inst = d.inst
-            let value = d.value
+        for inst in insts {
+            let value = inst.value
             switch inst.addressing {
             case .ZeroPage, .Relative, .Absolute:
                 print("\((pc+0x8000).hex): \(inst)  $\(value!.hex)")
