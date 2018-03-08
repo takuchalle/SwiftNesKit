@@ -86,6 +86,15 @@ struct Instruction: CustomStringConvertible {
     let addressing: Addressing
     let bytes: UInt8
     let cycle: UInt8
+    var value: UInt16?
+
+    init(opcode: Opcode, addressing: Addressing, bytes: UInt8, cycle: UInt8) {
+        self.opcode = opcode
+        self.addressing = addressing
+        self.bytes = bytes
+        self.cycle = cycle
+        self.value = nil
+    }
 
     var description: String {
         return self.opcode.rawValue
