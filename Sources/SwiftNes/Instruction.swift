@@ -99,4 +99,14 @@ struct Instruction: CustomStringConvertible {
     var description: String {
         return self.opcode.rawValue
     }
+
+    /* Only for JMP Instruction */
+    var address: UInt16 {
+        guard self.opcode == .JMP,
+              let _value = value else {
+            return UInt16(0)
+        }
+
+        return _value
+    }
 }
