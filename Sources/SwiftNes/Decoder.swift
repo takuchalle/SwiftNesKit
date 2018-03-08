@@ -276,17 +276,18 @@ struct Decoder {
         0x0F: Instruction(opcode: .SLO, addressing: .Absolute, bytes: 3, cycle: 2),
     ]
 
-    func decode(_ data: [UInt8], pc: Int) -> Instruction {
-        let op: UInt8 = data[pc]
+    func decode(_ data: [UInt8], pc: UInt16) -> Instruction {
+        let _pc = Int(pc)
+        let op: UInt8 = data[_pc]
         guard var _inst = InstructionTable[op] else {
             // TODO: Return Error code
             fatalError("Found Unknown Instruction: 0x\(String(op, radix: 16)).")
         }
         switch _inst.bytes {
         case 2:
-            _inst.value = (UInt16)(data[pc + 1])
+            _inst.value = (UInt16)(data[_pc + 1])
         case 3:
-            _inst.value = (UInt16)(data[pc + 1]) | (UInt16)(data[pc + 2]) << 8
+            _inst.value = (UInt16)(data[_pc + 1]) | (UInt16)(data[_pc + 2]) << 8
         default:
             _inst.value = nil
         }
@@ -296,13 +297,13 @@ struct Decoder {
 
     func decodeAll(_ ops :[UInt8]) -> [Instruction] {
         var insts: [Instruction] = []
-        var pc = 0
+        var pc = UInt16(0)
 
         repeat {
             let inst = decode(ops, pc: pc)
 
             insts.append(inst)
-            pc += (Int)(inst.bytes)
+            pc = pc + UInt16(inst.bytes)
         } while(pc < ops.count)
 
         return insts
