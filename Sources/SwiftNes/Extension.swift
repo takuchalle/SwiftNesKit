@@ -9,3 +9,9 @@ extension UInt16 {
         return String(self, radix: 16)
     }
 }
+
+extension Bool {
+    var toInt: Int {
+        return self ? 1 : 0 
+    }
+}
