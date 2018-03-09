@@ -101,6 +101,10 @@ struct CPU {
             txs()
         case .TYA:
             tya()
+        case .ADC:
+            adc(inst)
+        case .AND:
+            and(inst)
         default:
             print("Unknown opcode")
         }
@@ -218,6 +222,21 @@ struct CPU {
 
     mutating func tya() {
         self.a = self.y
+        setNZ(self.a)
+    }
+
+    mutating func adc(_ inst: Instruction) {
+        let value: Int = Int(self.a) + Int(read(inst)) + self.p.c.toInt
+
+        self.p.c = (value > 0xFF)
+        self.p.v = ((self.a <= 0xFF && 0x80 <= UInt8(value)) ||
+                      (UInt8(value) <= 0x7F && 0x80 <= self.a))
+        self.a = UInt8(value)
+        setNZ(self.a)
+    }
+
+    mutating func and(_ inst: Instruction) {
+        self.a = self.a & read(inst)
         setNZ(self.a)
     }
 }
