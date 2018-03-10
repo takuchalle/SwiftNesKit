@@ -11,6 +11,7 @@ let package = Package(
             name: "SwiftNes",
             targets: ["SwiftNes"]),
         .executable(name: "nes-disasm", targets: ["SwiftNesDisassemble"]),
+        .executable(name: "nes-cpu", targets: ["SwiftNesCpu"]),
     ],
     dependencies: [
       .package(url: "https://github.com/kylef/Commander.git", from: "0.8.0"),
@@ -24,6 +25,9 @@ let package = Package(
         .target(
             name: "SwiftNesDisassemble",
             dependencies: ["SwiftNes", "Commander"]),
+        .target(
+            name: "SwiftNesCpu",
+            dependencies: ["SwiftNes"]),
         .testTarget(
             name: "SwiftNesTests",
             dependencies: ["SwiftNes"]),
