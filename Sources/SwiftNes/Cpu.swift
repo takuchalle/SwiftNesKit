@@ -105,6 +105,22 @@ struct CPU {
             adc(inst)
         case .AND:
             and(inst)
+        case .ASL:
+            asl(inst)
+        case .BIT:
+            bit(inst)
+        case .CMP:
+            cmp(inst)
+        case .CPX:
+            cpx(inst)
+        case .CPY:
+            cpy(inst)
+        case .DEC:
+            dec(inst)
+        case .DEX:
+            dex(inst)
+        case .DEY:
+            dex(inst)
         default:
             print("Unknown opcode")
         }
@@ -138,28 +154,34 @@ struct CPU {
         return memory.read1byte(at: UInt16(0x100) + UInt16(self.s))
     }
 
-    func read(_ inst: Instruction) -> UInt8 {
+    func address(_ inst: Instruction) -> UInt16 {
         guard let value = inst.value else {
-            return UInt8(0)
+            return UInt16(0)
         }
 
         switch inst.addressing {
         case .ZeroPage, .Absolute:
-            return memory.read1byte(at: value)
+            return value
         case .ZeroPageX, .AbsoluteX:
-            return memory.read1byte(at: value + UInt16(self.x))
+            return value + UInt16(self.x)
         case .ZeroPageY, .AbsoluteY:
-            return memory.read1byte(at: value + UInt16(self.y))
-        case .Immediate:
-            return UInt8(value)
+            return value + UInt16(self.y)
         case .IndirectX:
-            let addr = memory.read2byte(at: value + UInt16(self.x))
-            return memory.read1byte(at: addr)
+            return memory.read2byte(at: value + UInt16(self.x))
         case .IndirectY:
             let addr = memory.read2byte(at: value)
-            return memory.read1byte(at: addr + UInt16(self.x))
+            return addr + UInt16(self.x)
         default:
-            return UInt8(0)
+            return UInt16(0)
+        }
+    }
+
+    func read(_ inst: Instruction) -> UInt8 {
+        switch inst.addressing {
+        case .Immediate:
+            return UInt8(inst.value!)
+        default:
+            return memory.read1byte(at: address(inst))
         }
     }
 
@@ -238,5 +260,53 @@ struct CPU {
     mutating func and(_ inst: Instruction) {
         self.a = self.a & read(inst)
         setNZ(self.a)
+    }
+
+    mutating func asl(_ inst: Instruction) {
+        let value: UInt16 = UInt16(read(inst)) << 1
+        self.p.c = (value > 0xFF)
+        self.a = UInt8(value)
+        setNZ(self.a)
+    }
+
+    mutating func bit(_ inst: Instruction) {
+        let value = read(inst)
+        self.p.n = (value >> 7) == 1
+        self.p.v = (value >> 6 & 0x1) == 1
+        self.p.z = (value & self.a) == 0
+    }
+
+    mutating func cmp(_ inst: Instruction) {
+        let value = read(inst)
+        setNZ(self.a - value)
+        self.p.c = self.a >= value
+    }
+
+    mutating func cpx(_ inst: Instruction) {
+        let value = read(inst)
+        setNZ(self.x - value)
+        self.p.c = self.x >= value
+    }
+
+    mutating func cpy(_ inst: Instruction) {
+        let value = read(inst)
+        setNZ(self.y - value)
+        self.p.c = self.y >= value
+    }
+
+    mutating func dec(_ inst: Instruction) {
+        let value = read(inst)
+        memory.write(at: address(inst), value: value - 1)
+        setNZ(value - 1)
+    }
+
+    mutating func dex(_ inst: Instruction) {
+        self.x = self.x - 1
+        setNZ(self.x)
+    }
+
+    mutating func dey(_ inst: Instruction) {
+        self.y = self.y - 1
+        setNZ(self.y)
     }
 }
