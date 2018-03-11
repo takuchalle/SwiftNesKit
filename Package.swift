@@ -27,7 +27,7 @@ let package = Package(
             dependencies: ["SwiftNes", "Commander"]),
         .target(
             name: "SwiftNesCpu",
-            dependencies: ["SwiftNes"]),
+            dependencies: ["SwiftNes", "Commander"]),
         .testTarget(
             name: "SwiftNesTests",
             dependencies: ["SwiftNes"]),
