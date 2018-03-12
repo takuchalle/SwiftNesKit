@@ -121,6 +121,24 @@ struct CPU {
             dex(inst)
         case .DEY:
             dex(inst)
+        case .EOR:
+            eor(inst)
+        case .INC:
+            inc(inst)
+        case .INX:
+            inx(inst)
+        case .INY:
+            inx(inst)
+        case .LSR:
+            lsr(inst)
+        case .ORA:
+            ora(inst)
+        case .ROL:
+            rol(inst)
+        case .ROR:
+            ror(inst)
+        case .SBC:
+            sbc(inst)
         default:
             print("Unknown opcode")
         }
@@ -263,10 +281,17 @@ struct CPU {
     }
 
     mutating func asl(_ inst: Instruction) {
-        let value: UInt16 = UInt16(read(inst)) << 1
-        self.p.c = (value > 0xFF)
-        self.a = UInt8(value)
-        setNZ(self.a)
+        if inst.addressing == .Accumulator {
+            self.p.c = (self.a & 0x1) == 0x1
+            self.a = self.a << 1
+            setNZ(self.a)
+        } else {
+            var value: UInt8 = read(inst)
+            self.p.c = (value & 0x1) == 0x1
+            value = value << 1
+            memory.write(at: address(inst), value: value)
+            setNZ(value)
+        }
     }
 
     mutating func bit(_ inst: Instruction) {
@@ -308,5 +333,86 @@ struct CPU {
     mutating func dey(_ inst: Instruction) {
         self.y = self.y - 1
         setNZ(self.y)
+    }
+
+    mutating func eor(_ inst: Instruction) {
+        self.a = self.a ^ read(inst)
+        setNZ(self.a)
+    }
+
+    mutating func inc(_ inst: Instruction) {
+        let value = read(inst)
+        memory.write(at: address(inst), value: value + 1)
+        setNZ(value + 1)
+    }
+
+    mutating func inx(_ inst: Instruction) {
+        self.x = self.x + 1
+        setNZ(self.x)
+    }
+
+    mutating func iny(_ inst: Instruction) {
+        self.y = self.y + 1
+        setNZ(self.y)
+    }
+
+    mutating func lsr(_ inst: Instruction) {
+        if inst.addressing == .Accumulator {
+            self.p.c = (self.a & 0x1) == 0x1
+            self.a = self.a >> 1
+            setNZ(self.a)
+        } else {
+            var value: UInt8 = read(inst)
+            self.p.c = (value & 0x1) == 0x1
+            value = value >> 1
+            memory.write(at: address(inst), value: value)
+            setNZ(value)
+        }
+    }
+
+    mutating func ora(_ inst: Instruction) {
+        self.a = self.a | read(inst)
+        setNZ(self.a)
+    }
+
+    mutating func rol(_ inst: Instruction) {
+        let carried: UInt8 = self.p.c ? 0x00 : 0x08
+
+        if inst.addressing == .Accumulator {
+            self.p.c = (self.a & 0x1) == 0x1
+            self.a = (self.a & carried) << 1
+            setNZ(self.a)
+        } else {
+            var value: UInt8 = read(inst)
+            self.p.c = (value & 0x1) == 0x1
+            value = (value & carried) << 1
+            memory.write(at: address(inst), value: value)
+            setNZ(value)
+        }
+    }
+
+    mutating func ror(_ inst: Instruction) {
+        let carried: UInt8 = self.p.c ? 0x00 : 0x08
+
+        if inst.addressing == .Accumulator {
+            self.p.c = (self.a & 0x1) == 0x1
+            self.a = (self.a & carried) >> 1
+            setNZ(self.a)
+        } else {
+            var value: UInt8 = read(inst)
+            self.p.c = (value & 0x1) == 0x1
+            value = (value & carried) >> 1
+            memory.write(at: address(inst), value: value)
+            setNZ(value)
+        }
+    }
+
+    mutating func sbc(_ inst: Instruction) {
+        let value: Int = Int(self.a) - Int(read(inst)) - ~(self.p.c.toInt)
+        self.p.c = (value >= 0x00)
+        self.p.v = ((self.a <= 0xFF && 0x80 <= UInt8(value)) ||
+                      (UInt8(value) <= 0x7F && 0x80 <= self.a))
+        self.a = UInt8(value)
+        setNZ(self.a)
     }
 }
