@@ -17,8 +17,9 @@ struct Memory {
     }
     
     mutating func load(at offset: Int, data: [UInt8]) {
-        let last = maxMemSize - offset + data.count
-        ram.replaceSubrange(offset...last, with: data)
+        let index = offset - 1
+        let last = maxMemSize - offset + data.count - 1
+        ram.replaceSubrange(index...last, with: data)
     }
 
     func read1byte(at offset: UInt16) -> UInt8 {
