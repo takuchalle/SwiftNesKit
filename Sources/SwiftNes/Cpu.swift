@@ -65,7 +65,11 @@ struct CPU {
         self.pc = 0x8000
     }
 
-    public mutating func step() {
+    mutating func load(with data: [UInt8]) {
+        memory.load(at: 0x8000, data: data)
+    }
+
+    mutating func step() {
         let inst = fetch()
         pc = pc + UInt16(inst.bytes)
         exec(inst)
