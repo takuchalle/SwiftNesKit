@@ -167,9 +167,22 @@ struct CPU {
         self.s = self.s - 1
     }
 
+    /* Stack Operation */
+    mutating func push16(_ value: UInt16) {
+        push(UInt8(value >> 8))
+        push(UInt8(value & 0xFF))
+    }
+
     mutating func pop() -> UInt8 {
         self.s = self.s + 1
         return memory.read1byte(at: UInt16(0x100) + UInt16(self.s))
+    }
+
+    mutating func pop16() -> UInt16 {
+        self.s = self.s + 1
+        let data = memory.read2byte(at: UInt16(0x100) + UInt16(self.s))
+        self.s = self.s + 1
+        return data
     }
 
     func address(_ inst: Instruction) -> UInt16 {
