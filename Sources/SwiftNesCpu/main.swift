@@ -13,7 +13,7 @@ func usage() {
     print("quit or q: quit application")
 }
 
-func inputCommant() {
+func inputCommand() {
     while(true) {
         print("type command")
         print("> ", terminator: "")
@@ -39,7 +39,7 @@ let main = command(
         print("Failed to Open \(path)")
         exit(EXIT_FAILURE)
     }
-    inputCommant()
+    inputCommand()
 }
 
 main.run()
