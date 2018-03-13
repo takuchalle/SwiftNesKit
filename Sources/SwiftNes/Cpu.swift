@@ -139,6 +139,71 @@ struct CPU {
             ror(inst)
         case .SBC:
             sbc(inst)
+        case .PHA:
+            push(self.a)
+        case .PHP:
+            push(self.p.bits)
+        case .PLA:
+            self.a = pop()
+            setNZ(self.a)
+        case .PLP:
+            self.p.bits = pop()
+        case .JMP:
+            self.pc = address(inst)
+        case .JSR:
+            push16(self.pc)
+            self.pc = address(inst)
+        case .RTS:
+            self.pc = pop16()
+        case .RTI:
+            self.p.bits = pop()
+            self.pc = pop16()
+        case .BCC:
+            if self.p.c == false {
+                self.pc = address(inst)
+            }
+        case .BCS:
+            if self.p.c == true {
+                self.pc = address(inst)
+            }
+        case .BNE:
+            if self.p.z == false {
+                self.pc = address(inst)
+            }
+        case .BEQ:
+            if self.p.z == true {
+                self.pc = address(inst)
+            }
+        case .BPL:
+            if self.p.n == false {
+                self.pc = address(inst)
+            }
+        case .BMI:
+            if self.p.n == true {
+                self.pc = address(inst)
+            }
+        case .BVC:
+            if self.p.v == false {
+                self.pc = address(inst)
+            }
+        case .BVS:
+            if self.p.v == true {
+                self.pc = address(inst)
+            }
+        case .CLC:
+            self.p.c = false
+        case .CLI:
+            self.p.i = false
+        case .CLV:
+            self.p.v = false
+        case .SEC:
+            self.p.c = true
+        case .SEI:
+            self.p.i = true
+        case .BRK:
+            self.p.b = true
+        case .NOP:
+            break /* do nothing */
         default:
             print("Unknown opcode")
         }
