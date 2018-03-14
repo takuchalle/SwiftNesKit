@@ -293,7 +293,10 @@ struct CPU {
         self.p.z = (value == UInt8(0))
         self.p.n = (value & (1 << 7) != 0)
     }
+}
 
+/* Executor */
+extension CPU {
     mutating func lda(_ inst: Instruction) {
         self.a = read(inst)
         setNZ(self.a)
@@ -356,7 +359,7 @@ struct CPU {
 
         self.p.c = (value > 0xFF)
         self.p.v = ((self.a <= 0xFF && 0x80 <= UInt8(value)) ||
-                      (UInt8(value) <= 0x7F && 0x80 <= self.a))
+            (UInt8(value) <= 0x7F && 0x80 <= self.a))
         self.a = UInt8(value)
         setNZ(self.a)
     }
@@ -497,7 +500,7 @@ struct CPU {
         let value: Int = Int(self.a) - Int(read(inst)) - ~(self.p.c.toInt)
         self.p.c = (value >= 0x00)
         self.p.v = ((self.a <= 0xFF && 0x80 <= UInt8(value)) ||
-                      (UInt8(value) <= 0x7F && 0x80 <= self.a))
+            (UInt8(value) <= 0x7F && 0x80 <= self.a))
         self.a = UInt8(value)
         setNZ(self.a)
     }
