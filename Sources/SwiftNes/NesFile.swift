@@ -51,25 +51,8 @@ public struct NesFile {
         var pc: UInt16 = 0x0
 
         for inst in insts {
-            let value = inst.value
-            switch inst.addressing {
-            case .ZeroPage, .Relative, .Absolute:
-                print("\((pc+0x8000).hex): \(inst)  $\(value!.hex)")
-            case .ZeroPageX, .AbsoluteX:
-                print("\((pc+0x8000).hex): \(inst)  $\(value!.hex), X")
-            case .ZeroPageY, .AbsoluteY:
-                print("\((pc+0x8000).hex): \(inst)  $\(value!.hex), Y")
-            case .Immediate:
-                print("\((pc+0x8000).hex): \(inst) #$\(value!.hex)")
-            case .Indirect:
-                print("\((pc+0x8000).hex): \(inst)  ($\(value!.hex))")
-            case .IndirectX:
-                print("\((pc+0x8000).hex): \(inst)  ($\(value!.hex), X)")
-            case .IndirectY:
-                print("\((pc+0x8000).hex): \(inst)  ($\(value!.hex)), Y")
-            default:
-                print("\((pc+0x8000).hex): \(inst)")
-            }
+            print("\((pc + UInt16(0x8000)).hex) ", inst)
+
             pc = pc + (UInt16)(inst.bytes)
         }
     }

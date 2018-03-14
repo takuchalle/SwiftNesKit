@@ -97,7 +97,24 @@ struct Instruction: CustomStringConvertible {
     }
 
     var description: String {
-        return self.opcode.rawValue
+        switch self.addressing {
+        case .ZeroPage, .Relative, .Absolute:
+            return "\(self.opcode.rawValue)  $\(self.value!.hex)"
+        case .ZeroPageX, .AbsoluteX:
+            return "\(self.opcode.rawValue)  $\(self.value!.hex), X"
+        case .ZeroPageY, .AbsoluteY:
+            return "\(self.opcode.rawValue)  $\(self.value!.hex), Y"
+        case .Immediate:
+            return "\(self.opcode.rawValue) #$\(self.value!.hex)"
+        case .Indirect:
+            return "\(self.opcode.rawValue)  ($\(self.value!.hex))"
+        case .IndirectX:
+            return "\(self.opcode.rawValue)  ($\(self.value!.hex), X)"
+        case .IndirectY:
+            return "\(self.opcode.rawValue)  ($\(self.value!.hex)), Y"
+        default:
+            return "\(self.opcode.rawValue)"
+        }
     }
 
     /* Only for JMP Instruction */
