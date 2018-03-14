@@ -293,6 +293,11 @@ struct CPU {
         self.p.z = (value == UInt8(0))
         self.p.n = (value & (1 << 7) != 0)
     }
+
+    func printRegister() {
+        print("A: \(self.a.hex) X: \(self.x.hex) Y: \(self.y.hex)")
+        print("SP: \(self.s.hex) P: \(self.p) PC: \(self.pc.hex)")
+    }
 }
 
 /* Executor */
