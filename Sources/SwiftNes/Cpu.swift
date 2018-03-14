@@ -76,7 +76,11 @@ struct CPU {
     }
 
     func fetch() -> Instruction {
-        return decoder.decode(memory.ram, pc: self.pc)
+        return decoder.decode(memory, pc: self.pc)
+    }
+
+    func printInst() {
+        print("pc:\(self.pc.hex):  ", fetch())
     }
 
     mutating func exec(_ inst: Instruction) {
