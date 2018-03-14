@@ -22,4 +22,8 @@ public struct SwiftNes {
     public mutating func stepCPU() {
         cpu.step()
     }
+
+    public func printCurrentInst() {
+        cpu.printInst()
+    }
 }

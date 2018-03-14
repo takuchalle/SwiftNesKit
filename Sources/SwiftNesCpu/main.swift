@@ -30,6 +30,7 @@ let main = command(
     nes.load(with: nesfile)
 
     while(true) {
+        nes.printCurrentInst()
         print("type command")
         print("> ", terminator: "")
 
