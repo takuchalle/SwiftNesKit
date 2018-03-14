@@ -10,6 +10,12 @@ extension UInt16 {
     }
 }
 
+extension UInt8 {
+    var hex: String {
+        return String(self, radix: 16)
+    }
+}
+
 extension Bool {
     var toInt: Int {
         return self ? 1 : 0 
