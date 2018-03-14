@@ -128,7 +128,7 @@ struct CPU {
         case .DEX:
             dex(inst)
         case .DEY:
-            dex(inst)
+            dey(inst)
         case .EOR:
             eor(inst)
         case .INC:
