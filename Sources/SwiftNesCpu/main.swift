@@ -40,9 +40,8 @@ let main = command(
         switch name  {
         case "s", "step":
             nes.stepCPU()
-            print("step")
         case "r", "reg":
-            print("reg")
+            nes.printCurrentCpuReg()
         case "q", "quit":
             return
         default:

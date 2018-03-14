@@ -26,4 +26,8 @@ public struct SwiftNes {
     public func printCurrentInst() {
         cpu.printInst()
     }
+
+    public func printCurrentCpuReg() {
+        cpu.printRegister()
+    }
 }
