@@ -4,7 +4,7 @@
 // Copyright © 2018 Takuya OHASHI. All rights reserved.
 //
 
-struct StatusRegister {
+struct StatusRegister: CustomStringConvertible {
     var n: Bool /* negative */
     var v: Bool /* overfloe */
     var r: Bool /* reserved */
@@ -67,7 +67,15 @@ struct StatusRegister {
         }
     }
 
-    
+    var description: String {
+        return "[N: \(self.n.toInt), " +
+          "V: \(self.v.toInt), " +
+          "B: \(self.b.toInt), " +
+          "I: \(self.i.toInt), " +
+          "Z: \(self.z.toInt), " +
+          "C: \(self.c.toInt)]"
+    }
+
     init() {
         n = false
         v = false

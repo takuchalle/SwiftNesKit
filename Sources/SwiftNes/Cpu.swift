@@ -297,8 +297,9 @@ struct CPU {
     }
 
     func printRegister() {
+        print("PC: 0x\(self.pc.hex)")
         print("A: \(self.a.hex) X: \(self.x.hex) Y: \(self.y.hex)")
-        print("SP: \(self.s.hex) P: \(self.p) PC: \(self.pc.hex)")
+        print("SP: \(self.s.hex) P:\(self.p)")
     }
 }
 

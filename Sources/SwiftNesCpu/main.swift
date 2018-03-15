@@ -9,9 +9,9 @@ import Commander
 
 func usage() {
     print("Usage:")
-    print("step or s: step next instruction")
-    print("reg or r: dump current register")
-    print("quit or q: quit application")
+    print("\tstep or s: step next instruction")
+    print("\treg or r: dump current register")
+    print("\tquit or q: quit application")
 }
 
 let main = command(
@@ -31,7 +31,6 @@ let main = command(
 
     while(true) {
         nes.printCurrentInst()
-        print("type command")
         print("> ", terminator: "")
 
         guard let name = readLine() else {
