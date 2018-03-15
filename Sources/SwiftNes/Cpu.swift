@@ -275,6 +275,8 @@ struct CPU {
         case .IndirectY:
             let addr = memory.read2byte(at: value)
             return addr + UInt16(self.x)
+        case .Relative:
+            return UInt16(Int(self.pc) + Int(Int8(bitPattern: UInt8(value))))
         default:
             return UInt16(0)
         }
