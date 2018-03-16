@@ -19,8 +19,8 @@ fileprivate func checkMagic(_ magic: Data) -> Bool {
 public struct NesFile {
 	let Program: [UInt8]
 	let Character: [UInt8]
-    let programSize: Int
-    let characterSize: Int
+        let programSize: Int
+        let characterSize: Int
 
 	private let programSizeUnit = 16 * 1024
 	private let characterSizeUnit = 8 * 1024
