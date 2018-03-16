@@ -69,6 +69,10 @@ struct CPU {
         memory.load(at: 0x8000, data: data)
     }
 
+    mutating func reset() {
+        self.resetHandler()
+    }
+
     mutating func step() {
         let inst = fetch()
         pc = pc + UInt16(inst.bytes)

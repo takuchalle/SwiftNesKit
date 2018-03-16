@@ -17,6 +17,9 @@ public struct SwiftNes {
         cpu.load(with: rom.Program)
 
         /* TODO: Load Character to PPU Memory */
+
+        /* After load all data, send reset signal */
+        cpu.reset()
     }
 
     public mutating func stepCPU() {
