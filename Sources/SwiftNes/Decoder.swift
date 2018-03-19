@@ -277,16 +277,17 @@ struct Decoder {
     ]
 
     func decode(_ m: Memory, pc: UInt16) -> Instruction {
-        let op: UInt8 = m.read1byte(at: pc)
+        let op: UInt8 = m[Int(pc)]
         guard var _inst = InstructionTable[op] else {
             // TODO: Return Error code
             fatalError("Found Unknown Instruction: 0x\(String(op, radix: 16)).")
         }
         switch _inst.bytes {
         case 2:
-            _inst.value = UInt16(m.read1byte(at: pc + 1))
+            let value: UInt8 = m[Int(pc + 1)]
+            _inst.value = UInt16(value)
         case 3:
-            _inst.value = m.read2byte(at: pc + 1)
+            _inst.value = m[Int(pc + 1)]
         default:
             _inst.value = nil
         }

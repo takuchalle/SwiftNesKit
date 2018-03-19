@@ -223,24 +223,24 @@ struct CPU {
 
     /* Interrupt Handler */
     mutating func nmiHandler() {
-        self.pc = memory.read2byte(at: 0xFFFA)
+        self.pc = memory[0xFFFA]
         self.p.i = true
         self.p.b = false
     }
 
     mutating func resetHandler() {
-        self.pc = memory.read2byte(at: 0xFFFC)
+        self.pc = memory[0xFFFC]
         self.p.i = true
     }
 
     mutating func irqHandler() {
-        self.pc = memory.read2byte(at: 0xFFFE)
+        self.pc = memory[0xFFFE]
         self.p.i = true
     }
 
     /* Stack Operation */
     mutating func push(_ value: UInt8) {
-        memory.write(at: UInt16(0x100) + UInt16(self.s), value: value)
+        memory[0x100 + Int(self.s)] = value
         self.s = self.s - 1
     }
 
@@ -252,12 +252,12 @@ struct CPU {
 
     mutating func pop() -> UInt8 {
         self.s = self.s + 1
-        return memory.read1byte(at: UInt16(0x100) + UInt16(self.s))
+        return memory[0x100 + Int(self.s)]
     }
 
     mutating func pop16() -> UInt16 {
         self.s = self.s + 1
-        let data = memory.read2byte(at: UInt16(0x100) + UInt16(self.s))
+        let data: UInt16 = memory[0x100 + Int(self.s)]
         self.s = self.s + 1
         return data
     }
@@ -275,9 +275,9 @@ struct CPU {
         case .ZeroPageY, .AbsoluteY:
             return value + UInt16(self.y)
         case .IndirectX:
-            return memory.read2byte(at: value + UInt16(self.x))
+            return memory[Int(value) + Int(self.x)]
         case .IndirectY:
-            let addr = memory.read2byte(at: value)
+            let addr: UInt16 = memory[Int(value)]
             return addr + UInt16(self.x)
         case .Relative:
             return UInt16(Int(self.pc) + Int(Int8(bitPattern: UInt8(value))))
@@ -291,7 +291,7 @@ struct CPU {
         case .Immediate:
             return UInt8(inst.value!)
         default:
-            return memory.read1byte(at: address(inst))
+            return memory[Int(address(inst))]
         }
     }
 
@@ -325,15 +325,15 @@ extension CPU {
     }
 
     mutating func sta(_ inst: Instruction) {
-        memory.write(at: inst.value!, value: self.a)
+        memory[Int(inst.value!)] = self.a
     }
 
     mutating func stx(_ inst: Instruction) {
-        memory.write(at: inst.value!, value: self.x)
+        memory[Int(inst.value!)] = self.x
     }
 
     mutating func sty(_ inst: Instruction) {
-        memory.write(at: inst.value!, value: self.y)
+        memory[Int(inst.value!)] = self.y
     }
 
     mutating func tax() {
@@ -390,7 +390,7 @@ extension CPU {
             var value: UInt8 = read(inst)
             self.p.c = (value & 0x1) == 0x1
             value = value << 1
-            memory.write(at: address(inst), value: value)
+            memory[Int(address(inst))] = value
             setNZ(value)
         }
     }
@@ -422,7 +422,7 @@ extension CPU {
 
     mutating func dec(_ inst: Instruction) {
         let value = read(inst)
-        memory.write(at: address(inst), value: value - 1)
+        memory[Int(address(inst))] = value - 1
         setNZ(value - 1)
     }
 
@@ -443,7 +443,7 @@ extension CPU {
 
     mutating func inc(_ inst: Instruction) {
         let value = read(inst)
-        memory.write(at: address(inst), value: value + 1)
+        memory[Int(address(inst))] = value + 1
         setNZ(value + 1)
     }
 
@@ -466,7 +466,7 @@ extension CPU {
             var value: UInt8 = read(inst)
             self.p.c = (value & 0x1) == 0x1
             value = value >> 1
-            memory.write(at: address(inst), value: value)
+            memory[Int(address(inst))] = value
             setNZ(value)
         }
     }
@@ -487,7 +487,7 @@ extension CPU {
             var value: UInt8 = read(inst)
             self.p.c = (value & 0x1) == 0x1
             value = (value & carried) << 1
-            memory.write(at: address(inst), value: value)
+            memory[Int(address(inst))] = value
             setNZ(value)
         }
     }
@@ -503,7 +503,7 @@ extension CPU {
             var value: UInt8 = read(inst)
             self.p.c = (value & 0x1) == 0x1
             value = (value & carried) >> 1
-            memory.write(at: address(inst), value: value)
+            memory[Int(address(inst))] = value
             setNZ(value)
         }
     }
