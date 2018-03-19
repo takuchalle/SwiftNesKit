@@ -9,6 +9,7 @@ import Foundation
 struct Memory {
 
     var ram: [UInt8]
+    var ioreg = [Int: (UInt8) -> (UInt8)]()
 
     private let maxMemSize = 0x10000
 
@@ -18,15 +19,27 @@ struct Memory {
 
     subscript(index: Int) -> UInt8 {
         get {
-            return read1byte(at: UInt16(index))
+            if let _ioreg = ioreg[index] {
+                return _ioreg(UInt8(0))
+            } else {
+                return read1byte(at: UInt16(index))
+            }
         }
         set(newValue) {
-            write(at: UInt16(index), value: newValue)
+            if let _ioreg = ioreg[index] {
+                let _ = _ioreg(newValue)
+            } else {
+                write(at: UInt16(index), value: newValue)
+            }
         }
     }
 
     subscript(index: Int) -> UInt16 {
         return read2byte(at: UInt16(index))
+    }
+
+    mutating func setIoregCallback(at: Int, callback: @escaping (UInt8) -> (UInt8)) {
+        ioreg[at] = callback
     }
     
     mutating func load(at address: Int, data: [UInt8]) {
