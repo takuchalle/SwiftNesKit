@@ -79,6 +79,10 @@ struct CPU {
         exec(inst)
     }
 
+    mutating func setIOreg(at addr: Int, callback: @escaping (UInt8?) -> (UInt8)) {
+        self.memory.setIoregCallback(at: addr, callback: callback)
+    }
+
     func fetch() -> Instruction {
         return decoder.decode(memory, pc: self.pc)
     }
