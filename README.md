@@ -23,6 +23,16 @@ $ nes-disasm nes_file
 
 For further information, check [README](https://github.com/takuyaohashi/SwiftNes/blob/master/Sources/SwiftNesDisassemble/README.md)
 
+# :smile: Commit Symbols
+|emoji              |mean                                    |
+|-------------------|----------------------------------------|
+|:sparkles:         |add new feature                         |
+|:lipstick:         |improve the format/structure of the code|
+|:bug:              |fix bug                                 |
+|:wrench:           |improve development environment         |
+|:memo:             |improve document                        |
+|:see_no_evil:      |ignore something                        |
+
 # Authors
 
 [@takuyachallenge](https://twitter.com/takuyachallenge)
