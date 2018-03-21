@@ -1,8 +1,13 @@
-# SwiftNesDisassember
+# nes-disasm
 
 NES Disassember
 
 # Install
+
+```
+$ brew tap takuyaohashi/SwiftNes https://github.com/takuyaohashi/SwiftNes
+$ brew install SwiftNes
+```
 
 # Usage
 

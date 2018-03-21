@@ -1,14 +1,26 @@
-# SwiftNesDisassember
+# nes-cpu
 
-NES Disassember
+NES CPU
 
 # Install
+
+```
+$ brew tap takuyaohashi/SwiftNes https://github.com/takuyaohashi/SwiftNes
+$ brew install SwiftNes
+```
 
 # Usage
 
 ```
-$ nes-disasm nes_file 
+$ nes-cpu nes_file 
 ```
+
+## Commands
+
+|commands    |mean                     |
+|------------|-------------------------|
+| s or step  |exec current instruction |
+| r or reg   |show current register    |
 
 # Authors
 
