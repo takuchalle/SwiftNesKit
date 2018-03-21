@@ -21,6 +21,7 @@ $ nes-cpu nes_file
 |------------|-------------------------|
 | s or step  |exec current instruction |
 | r or reg   |show current register    |
+| q or quit  |quit this app            |
 
 # Authors
 
