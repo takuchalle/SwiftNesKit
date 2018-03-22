@@ -16,10 +16,10 @@ public struct SwiftNes {
     }
 
     public mutating func load(with rom: NesFile) {
-        /* Load Program to CPU Memory */
+        /* Load ROM data to Memory */
         cpu.load(with: rom.Program)
+        ppu.load(with: rom.Character)
 
-        /* TODO: Load Character to PPU Memory */
         connectCpuPpu(with: self.ppu)
 
         /* After load all data, send reset signal */
@@ -29,6 +29,15 @@ public struct SwiftNes {
     mutating func connectCpuPpu(with ppu: PPU) {
         cpu.setIOreg(at: 0x2000, callback: { (value:UInt8?) -> (UInt8) in
                                      ppu.setPPUCTRL(with: value!)
+                                     return UInt8(0)
+                                 })
+        cpu.setIOreg(at: 0x2001, callback: { (value:UInt8?) -> (UInt8) in
+                                     ppu.setPPUMASK(with: value!)
+                                     return UInt8(0)
+                                 })
+
+        cpu.setIOreg(at: 0x2006, callback: { (value:UInt8?) -> (UInt8) in
+                                     ppu.setVRAMAddress(with: value!)
                                      return UInt8(0)
                                  })
     }
