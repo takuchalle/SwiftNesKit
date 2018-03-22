@@ -6,12 +6,18 @@
 
 final class PPU {
     var interruptNMI: Bool
+    var memory: Memory
 
     init() {
         interruptNMI = false
+        self.memory = Memory()
     }
 
-    /* Control Register 1
+    func load(with data: [UInt8]) {
+        memory.load(at: 0x0000, data: data)
+    }
+
+    /* Control Register
      * bit7: NMI Interruput enable 0:off, 1:on
      * bit6: select PPU 0: master, 1:slave
      * bit5: sprite size 0:8x8, 1: 8x16
@@ -24,5 +30,21 @@ final class PPU {
      */
     func setPPUCTRL(with value: UInt8) {
         self.interruptNMI = (value & 0x80) != 0
+    }
+
+    /* Mask Register
+     * bit7: Emphasize blue
+     * bit6: Emphasize green
+     * bit5: Emphasize red
+     * bit4: Show sprite 0:hide
+     * bit3: Show Background 0:hide
+     * bit2: Show sprite in leftmost 8 pixel 0:hide
+     * bit1: Show Background in leftmost 8 pixel 0:hide
+     * bit0: Greyscale 0:color, 1: grayscale
+     */
+    func setPPUMASK(with value: UInt8) {
+    }
+
+    func setVRAMAddress(with value: UInt8) {
     }
 }
