@@ -6,15 +6,15 @@
 
 final class PPU {
     var interruptNMI: Bool
-    var memory: Memory
+    var vram: VRAM
 
     init() {
         interruptNMI = false
-        self.memory = Memory()
+        self.vram = VRAM()
     }
 
     func load(with data: [UInt8]) {
-        memory.load(at: 0x0000, data: data)
+        vram.memory.load(at: 0x0000, data: data)
     }
 
     /* Control Register
