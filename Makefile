@@ -1,5 +1,5 @@
 TOOL_NAME = nes-disasm nes-cpu
-VERSION = 0.0.2
+VERSION = 0.0.3
 
 PREFIX?=/usr/local
 INSTALL_PATH = $(PREFIX)/bin/

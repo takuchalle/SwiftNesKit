@@ -1,8 +1,8 @@
 class Swiftnes < Formula
     desc "NES emulator written in swift"
     homepage "https://github.com/takuyaohashi/SwiftNes"
-    url "https://github.com/takuyaohashi/SwiftNes/archive/0.0.2.tar.gz"
-    sha256 "fc8820298a06285a5b9e9a67826758e77ddbaef7f0296ae97f23f80cdf6da3b8"
+    url "https://github.com/takuyaohashi/SwiftNes/archive/0.0.3.tar.gz"
+    sha256 "1efe3cca9417ad7b44ef5476fad50b9c9fab5925fffc8293cdb3f3931dc0a2a3"
     def install
         system "make", "install", "PREFIX=#{prefix}"
     end
