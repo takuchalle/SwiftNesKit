@@ -45,6 +45,7 @@ final class PPU {
     func setPPUMASK(with value: UInt8) {
     }
 
-    func setVRAMAddress(with value: UInt8) {
+    func setVRAMAddress(with addr: UInt8) {
+        self.vram.setAddress(with: addr)
     }
 }
