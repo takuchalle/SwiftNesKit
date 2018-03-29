@@ -20,7 +20,7 @@ final class PPU {
     /* Control Register
      * bit7: NMI Interruput enable 0:off, 1:on
      * bit6: select PPU 0: master, 1:slave
-     * bit5: sprite size 0:8x8, 1: 8x16
+     * bit5: sprite size 0:0x8, 1: 0x16
      * bit4: character table base for BG, 0:0x0000, 1:1000
      * bit3: character table base for Sprite, 0:0x0000, 1:1000
      * bit2: VRAM addres increment per CPU read/write of PPUDATA
