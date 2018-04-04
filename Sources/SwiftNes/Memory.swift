@@ -20,7 +20,7 @@ struct Memory {
     subscript(index: Int) -> UInt8 {
         get {
             if let _ioreg = ioreg[index] {
-                return _ioreg(UInt8(0))
+                return _ioreg(nil)
             } else {
                 return read1byte(at: UInt16(index))
             }
