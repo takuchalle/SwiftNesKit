@@ -13,7 +13,7 @@ final class PPU {
     var spriteSize: UInt8
     var tableBaseForBG: UInt16
     var tableBaseForSprite: UInt16
-    var addressIncStep: UInt8
+    var addressIncStep: UInt16
     var nametableBase: UInt16
 
     init() {
@@ -79,5 +79,16 @@ final class PPU {
 
     func setVRAMAddress(with addr: UInt8) {
         self.vram.setAddress(with: addr)
+    }
+
+    func readVRAM() -> UInt8 {
+        let data : UInt8 = vram.memory[Int(vram.address)]
+        vram.address += self.addressIncStep
+        return data
+    }
+
+    func writeVRAM(_ data: UInt8) {
+        vram.memory[Int(vram.address)] = data
+        vram.address += self.addressIncStep
     }
 }

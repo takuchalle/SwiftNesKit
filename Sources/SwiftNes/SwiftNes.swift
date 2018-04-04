@@ -40,6 +40,14 @@ public struct SwiftNes {
                                      ppu.setVRAMAddress(with: value!)
                                      return UInt8(0)
                                  })
+        cpu.setIOreg(at: 0x2007, callback: { (value:UInt8?) -> (UInt8) in
+                                     if let _value = value {
+                                         ppu.writeVRAM(_value)
+                                         return UInt8(0)
+                                     } else {
+                                         return ppu.readVRAM()
+                                     }
+                                 })
     }
 
     public mutating func stepCPU() {
