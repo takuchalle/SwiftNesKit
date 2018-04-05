@@ -45,11 +45,11 @@ final class PPU {
      */
     func setPPUCTRL(with value: UInt8) {
         self.interruptNMI       =  (value & 0x80) != 0
-        self.selectPPU          = ((value & 0x40) != 0) ? 1 : 2
-        self.spriteSize         = ((value & 0x20) != 0) ? 0x8 : 0x16
-        self.tableBaseForBG     = ((value & 0x10) != 0) ? 0x0000 : 0x1000
-        self.tableBaseForSprite = ((value & 0x08) != 0) ? 0x0000 : 0x1000
-        self.addressIncStep     = ((value & 0x04) != 0) ? 1 : 32
+        self.selectPPU          = ((value & 0x40) == 0) ? 1 : 2
+        self.spriteSize         = ((value & 0x20) == 0) ? 0x8 : 0x16
+        self.tableBaseForBG     = ((value & 0x10) == 0) ? 0x0000 : 0x1000
+        self.tableBaseForSprite = ((value & 0x08) == 0) ? 0x0000 : 0x1000
+        self.addressIncStep     = ((value & 0x04) == 0) ? 1 : 32
         switch value & 0b11 {
         case 0b00:
             self.nametableBase = 0x0000
