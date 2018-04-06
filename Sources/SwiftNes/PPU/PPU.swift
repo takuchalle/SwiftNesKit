@@ -16,10 +16,20 @@ final class PPU {
     var addressIncStep: UInt16
     var nametableBase: UInt16
 
+    var emphasizeBlue: Bool = false
+    var emphasizeGreen: Bool = false
+    var emphasizeRed: Bool = false
+
+    var showSprite: Bool = false
+    var showBG: Bool = false
+    var showSpriteLeft: Bool = false
+    var showBGLeft: Bool = false
+    var greyscale: Bool = false
+
     init() {
-        interruptNMI = false
         self.vram = VRAM()
 
+        self.interruptNMI = false
         self.selectPPU = 0
         self.spriteSize = 0x8
         self.tableBaseForBG = 0x0000
@@ -75,6 +85,14 @@ final class PPU {
      * bit0: Greyscale 0:color, 1: grayscale
      */
     func setPPUMASK(with value: UInt8) {
+        self.emphasizeBlue =  (value & 0x80) != 0
+        self.emphasizeGreen =  (value & 0x40) != 0
+        self.emphasizeRed =  (value & 0x20) != 0
+        self.showSprite =  (value & 0x10) != 0
+        self.showBG =  (value & 0x08) != 0
+        self.showSpriteLeft =  (value & 0x04) != 0
+        self.showBGLeft =  (value & 0x02) != 0
+        self.greyscale =  (value & 0x01) != 0
     }
 
     func setVRAMAddress(with addr: UInt8) {
