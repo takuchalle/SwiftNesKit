@@ -5,8 +5,8 @@ NES Disassember
 # Install
 
 ```
-$ brew tap takuyaohashi/SwiftNes https://github.com/takuyaohashi/SwiftNes
-$ brew install SwiftNes
+$ brew tap takuyaohashi/SwiftNesKit https://github.com/takuyaohashi/SwiftNesKit
+$ brew install SwiftNesKit
 ```
 
 # Usage
@@ -21,4 +21,4 @@ $ nes-disasm nes_file
 
 # License
 
-[MIT](https://github.com/takuyaohashi/SwiftNes/blob/master/LICENSE)
+[MIT](https://github.com/takuyaohashi/SwiftNesKit/blob/master/LICENSE)
