@@ -35,7 +35,7 @@ For further information, check [README](https://github.com/takuyaohashi/SwiftNes
 
 # Authors
 
-[@takuyachallenge](https://twitter.com/takuyachallenge)
+[@takuchalle](https://twitter.com/takuchalle)
 
 # License
 

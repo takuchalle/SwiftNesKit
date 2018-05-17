@@ -17,7 +17,7 @@ $ nes-disasm nes_file
 
 # Authors
 
-[@takuyachallenge](https://twitter.com/takuyachallenge)
+[@takuchalle](https://twitter.com/takuchalle)
 
 # License
 
