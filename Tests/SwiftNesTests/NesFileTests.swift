@@ -1,5 +1,5 @@
 import XCTest
-@testable import SwiftNes
+@testable import SwiftNesKit
 
 class NesFileTests: XCTestCase {
     func testNesFileInitializeWithWrongHeader() {
