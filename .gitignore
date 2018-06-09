@@ -6,7 +6,7 @@
 build/
 DerivedData/
 
-SwiftNes.xcodeproj/
+*.xcodeproj/
 *.swp
 
 ## Various settings
