@@ -5,7 +5,7 @@
 //
 import Foundation
 import Commander
-import SwiftNes
+import SwiftNesKit
 
 let main = command(
   Argument<String>("path"),

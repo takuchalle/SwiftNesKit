@@ -4,7 +4,7 @@
 // Copyright © 2018 Takuya OHASHI. All rights reserved.
 //
 
-public struct SwiftNes {
+public struct SwiftNesKit {
     private var cpu: CPU
     private var ppu: PPU
 

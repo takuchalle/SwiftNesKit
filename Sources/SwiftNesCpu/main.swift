@@ -4,7 +4,7 @@
 // Copyright © 2018 Takuya OHASHI. All rights reserved.
 //
 import Foundation
-import SwiftNes
+import SwiftNesKit
 import Commander
 
 func usage() {
@@ -26,7 +26,7 @@ let main = command(
         exit(EXIT_FAILURE)
     }
 
-    var nes = SwiftNes()
+    var nes = SwiftNesKit()
     nes.load(with: nesfile)
 
     while(true) {

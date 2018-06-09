@@ -4,12 +4,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftNes",
+    name: "SwiftNesKit",
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
-            name: "SwiftNes",
-            targets: ["SwiftNes"]),
+            name: "SwiftNesKit",
+            targets: ["SwiftNesKit"]),
         .executable(name: "nes-disasm", targets: ["SwiftNesDisassemble"]),
         .executable(name: "nes-cpu", targets: ["SwiftNesCpu"]),
     ],
@@ -20,16 +20,16 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
-            name: "SwiftNes",
+            name: "SwiftNesKit",
             dependencies: []),
         .target(
             name: "SwiftNesDisassemble",
-            dependencies: ["SwiftNes", "Commander"]),
+            dependencies: ["SwiftNesKit", "Commander"]),
         .target(
             name: "SwiftNesCpu",
-            dependencies: ["SwiftNes", "Commander"]),
+            dependencies: ["SwiftNesKit", "Commander"]),
         .testTarget(
             name: "SwiftNesTests",
-            dependencies: ["SwiftNes"]),
+            dependencies: ["SwiftNesKit"]),
     ]
 )
