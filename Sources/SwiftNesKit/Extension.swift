@@ -22,26 +22,3 @@ extension Bool {
     }
 }
 
-#if os(iOS)
-import UIKit
-extension UIColor {
-    public convenience init(red: UInt8, green: UInt8, blue: UInt8) {
-        let divisor = CGFloat(255)
-        let red     = CGFloat(red) / divisor
-        let green   = CGFloat(green) / divisor
-        let blue    = CGFloat(blue) / divisor
-        self.init(red: red, green: green, blue: blue, alpha: CGFloat(0xFF))
-    }
-}
-#elseif os(OSX)
-import AppKit
-extension NSColor {
-    public convenience init(red: UInt8, green: UInt8, blue: UInt8) {
-        let divisor = CGFloat(255)
-        let red     = CGFloat(red) / divisor
-        let green   = CGFloat(green) / divisor
-        let blue    = CGFloat(blue) / divisor
-        self.init(red: red, green: green, blue: blue, alpha: CGFloat(0xFF))
-    }
-}
-#endif

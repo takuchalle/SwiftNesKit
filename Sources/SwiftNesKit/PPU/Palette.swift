@@ -4,13 +4,7 @@
 // Copyright © 2018 Takuya OHASHI. All rights reserved.
 //
 
-#if os(iOS)
-import UIKit
-typealias XColor = UIColor
-#elseif os(OSX)
-import AppKit
-typealias XColor = NSColor
-#endif
+
 
 fileprivate let ColorTable : [XColor] = [
     XColor.init(red: 0x6D, green: 0x6D, blue: 0x6D), // 0x00
