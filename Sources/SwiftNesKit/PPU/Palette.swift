@@ -4,8 +4,6 @@
 // Copyright © 2018 Takuya OHASHI. All rights reserved.
 //
 
-
-
 fileprivate let ColorTable : [XColor] = [
     XColor.init(red: 0x6D, green: 0x6D, blue: 0x6D), // 0x00
     XColor.init(red: 0x00, green: 0x24, blue: 0x91), // 0x01
