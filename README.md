@@ -33,7 +33,7 @@ For further information, check [README](https://github.com/takuyaohashi/SwiftNes
 |:memo:             |improve document                        |
 |:see_no_evil:      |ignore something                        |
 
-# Authors
+# Author
 
 [@takuchalle](https://twitter.com/takuchalle)
 
