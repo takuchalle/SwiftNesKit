@@ -12,6 +12,7 @@ class PaletteTests: XCTestCase {
         ]
         let palette = Palette.read(data)
         
+        XCTAssert(palette.count == 4)
         for (index, color) in palette.enumerated() {
             XCTAssert(color.isEqual(expect[index]))
         }
