@@ -4,19 +4,38 @@
 // Copyright © 2018 Takuya OHASHI. All rights reserved.
 //
 
-
 fileprivate let UNIT_SIZE = 8
 fileprivate let PATTERN_SIZE = UNIT_SIZE * 2
+
+fileprivate func bits(fromByte byte: UInt8) -> [UInt8] {
+    var byte = byte
+    var bits = [UInt8](repeating: 0, count: 8)
+    for i in 0..<8 {
+        bits[i] = byte & 0x01
+        byte >>= 1
+    }
+    return bits
+}
 
 struct Pattern {
     var data: [[UInt8]]
 
     init() {
-        data = [[UInt8]](repeating: [UInt8](repeating: 0, count: 1), count: 1)
+        data = [[UInt8]](repeating: [UInt8](repeating: 0, count: UNIT_SIZE), count: UNIT_SIZE)
     }
 
     static func readPattern(_ upper: [UInt8], _ lower: [UInt8]) -> Pattern {
         var pattern = Pattern()
+
+        for i in 0..<UNIT_SIZE {
+            var u = bits(fromByte: upper[i])
+            var l = bits(fromByte: lower[i])
+
+            for j in 0..<UNIT_SIZE {
+                pattern.data[i][j] = u[j] + l[j]
+            }
+        }
+
         return pattern
     }
     
