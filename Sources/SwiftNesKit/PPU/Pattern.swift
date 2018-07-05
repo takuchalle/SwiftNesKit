@@ -14,7 +14,7 @@ fileprivate func bits(fromByte byte: UInt8) -> [UInt8] {
         bits[i] = byte & 0x01
         byte >>= 1
     }
-    return bits
+    return bits.reversed()
 }
 
 struct Pattern {
@@ -32,7 +32,7 @@ struct Pattern {
             var l = bits(fromByte: lower[i])
 
             for j in 0..<UNIT_SIZE {
-                pattern.data[i][j] = u[j] + l[j]
+                pattern.data[i][j] = u[j] << 0 | l[j] << 1
             }
         }
 
